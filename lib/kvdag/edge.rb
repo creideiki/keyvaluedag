@@ -4,10 +4,16 @@ class KVDAG
     attr_reader :to_vertex
 
     private :initialize
-    def initialize(target, attrs = {})
+    def initialize(dag, target, attrs = {})
       @to_vertex = target
-      @attrs = attrs
+      @attrs = dag.hash_proxy_class.new(attrs)
     end
+
+    def inspect
+      "#<%s @attr=%s @to_vertex=%s>" % [self.class, @attrs.to_hash, @to_vertex]
+    end
+
+    alias to_s inspect
 
     def [](attr)
       @attrs[attr] || to_vertex[attr]
