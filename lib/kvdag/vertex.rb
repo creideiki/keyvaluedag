@@ -9,10 +9,16 @@ class KVDAG
     def initialize(dag, attrs = {})
       @edges = Set.new
       @dag = dag
-      @attrs = attrs
+      @attrs = dag.hash_proxy_class.new(attrs)
 
       @dag.vertices << self
     end
+
+    def inspect
+      "#<%s @attr=%s @edges=%s>" % [self.class, @attrs.to_hash, @edges.to_a]
+    end
+
+    alias to_s inspect
 
     alias outgoing_edges edges
 
@@ -61,7 +67,7 @@ class KVDAG
       raise VertexError.new("Not in the same DAG") if @dag != other.dag
       raise CyclicError.new("Would become cyclic") if other.reachable?(self)
 
-      edge = Edge.new(other, attrs)
+      edge = Edge.new(@dag, other, attrs)
       @edges << edge
       edge
     end
@@ -73,11 +79,11 @@ class KVDAG
     end
 
     def to_hash
-      result = Hash.new
+      result = @dag.hash_proxy_class.new
       outgoing_edges.each do |edge|
         result.merge!(edge.to_hash)
       end
-      result.merge!(@attrs)
+      result.merge!(@attrs).to_hash
     end
   end
 end
