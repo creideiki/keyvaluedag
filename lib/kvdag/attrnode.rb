@@ -1,5 +1,7 @@
 class KVDAG
   module AttributeNode
+    attr_reader :attrs
+
     def [](attr)
       @attrs[attr]
     end
