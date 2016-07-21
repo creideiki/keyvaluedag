@@ -25,11 +25,11 @@ class KVDAG
     end
 
     def merge(other, &block)
-      self.class.new(@hash.deep_merge(other, &block))
+      self.class.new(@hash.deep_merge(other.deep_stringify_keys, &block))
     end
 
     def merge!(other, &block)
-      @hash.deep_merge!(other, &block)
+      @hash.deep_merge!(other.deep_stringify_keys, &block)
       self
     end
 
