@@ -2,8 +2,11 @@ class KVDAG
   module AttributeNode
     attr_reader :attrs
 
-    def [](attr)
-      if self.respond_to?(:to_hash_proxy) then
+    def [](attr, options = {})
+      case
+      when (options[:shallow])
+        @attrs[attr]
+      when self.respond_to?(:to_hash_proxy)
         to_hash_proxy[attr]
       else
         to_hash[attr]
