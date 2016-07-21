@@ -20,14 +20,14 @@ class KVDAG
 
     alias to_s inspect
 
-    alias outgoing_edges edges
+    alias children edges
 
-    def incoming_edges
+    def parents
       result = Set.new
       dag.vertices.each do |vertex|
         next if vertex.equal?(self)
         vertex.edges.each do |edge|
-          result << edge if edge.to_vertex.equal?(self)
+          result << vertex if edge.to_vertex.equal?(self)
         end
       end
       result
@@ -44,13 +44,13 @@ class KVDAG
       other.reachable?(self)
     end
 
-    def reachable_vertices
+    def decendants
       result = Set.new
       dag.vertices.each {|vertex| result << vertex if reachable?(vertex)}
       result
     end
 
-    def reachable_from_vertices
+    def ancestors
       result = Set.new
       dag.vertices.each {|vertex| result << vertex if reachable_from?(vertex)}
       result
@@ -73,14 +73,14 @@ class KVDAG
     end
 
     def [](attr)
-      @attrs[attr] || outgoing_edges.reduce(nil) do |found, edge|
+      @attrs[attr] || edges.reduce(nil) do |found, edge|
         found || edge[attr]
       end
     end
 
     def to_hash
       result = @dag.hash_proxy_class.new
-      outgoing_edges.each do |edge|
+      edges.each do |edge|
         result.merge!(edge.to_hash)
       end
       result.merge!(@attrs).to_hash
