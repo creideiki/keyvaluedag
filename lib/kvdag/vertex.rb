@@ -72,18 +72,12 @@ class KVDAG
       edge
     end
 
-    def [](attr)
-      @attrs[attr] || edges.reduce(nil) do |found, edge|
-        found || edge[attr]
-      end
-    end
-
-    def to_hash
+    def to_hash_proxy
       result = @dag.hash_proxy_class.new
       edges.each do |edge|
-        result.merge!(edge.to_hash)
+        result.merge!(edge.to_hash_proxy)
       end
-      result.merge!(@attrs).to_hash
+      result.merge!(@attrs)
     end
   end
 end

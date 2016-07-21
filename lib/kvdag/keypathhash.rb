@@ -25,11 +25,12 @@ class KVDAG
     end
 
     def merge(other, &block)
-      @hash.deep_merge(other, &block)
+      self.class.new(@hash.deep_merge(other, &block))
     end
 
     def merge!(other, &block)
       @hash.deep_merge!(other, &block)
+      self
     end
 
     def [](keypath)

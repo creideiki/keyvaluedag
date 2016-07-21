@@ -15,12 +15,8 @@ class KVDAG
 
     alias to_s inspect
 
-    def [](attr)
-      @attrs[attr] || to_vertex[attr]
-    end
-
-    def to_hash
-      result = @to_vertex.to_hash
+    def to_hash_proxy
+      result = @to_vertex.to_hash_proxy
       result.merge!(@attrs)
     end
 
