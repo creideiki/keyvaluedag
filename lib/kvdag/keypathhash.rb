@@ -1,7 +1,8 @@
+require 'delegate'
 require 'active_support/core_ext/hash'
 
 class KVDAG
-  class KeyPathHashProxy
+  class KeyPathHashProxy < DelegateClass(Hash)
     class KeyPath < Array
       private :initialize
       def initialize(keypath)
@@ -14,16 +15,9 @@ class KVDAG
     def initialize(hash = {})
       raise TypeError.new("Must be initialized with a `hash`") unless hash.is_a?(Hash)
       @hash = hash.deep_stringify_keys
+      super(@hash)
     end
     
-    def method_missing(name, *args, &block)
-      @hash.send(name, *args, &block)
-    end
-
-    def to_hash
-      @hash
-    end
-
     def merge(other, &block)
       self.class.new(@hash.deep_merge(other.deep_stringify_keys, &block))
     end
