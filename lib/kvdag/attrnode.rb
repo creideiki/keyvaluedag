@@ -35,5 +35,19 @@ class KVDAG
       @attrs.merge!(other.to_hash)
       self
     end
+
+    # Filter the key-value view of a vertex by a list of key prefixes,
+    # and return a hash_proxy containing only those trees.
+    #
+    # :call-seq:
+    #   filter("key.path1", ..., "key.pathN") -> hash_proxy
+
+    def filter(*keys)
+      if self.respond_to?(:to_hash_proxy) then
+        to_hash_proxy.filter(*keys)
+      else
+        raise NotImplementedError.new("not implemented for plain hash")
+      end
+    end
   end
 end
