@@ -27,12 +27,38 @@ class KVDAG
       self
     end
 
-    def [](keypath)
-      *keypath, key = KeyPath.new(keypath)
+    # :call-seq:
+    #   fetch("key.path")      -> value or KeyError
+    #   fetch(["key", "path"]) -> value or KeyError
+    #
+    # Return the value at a specified keypath. If the keypath
+    # does not specify a terminal value, return the remaining
+    # subtree instead.
+    #
+    # Raises a KeyError exception if the keypath is not found.
+
+    def fetch(keypath)
+      *keysubpath, key = KeyPath.new(keypath)
       hash = @hash
 
-      keypath.each {|key| hash = hash[key]}
-      hash[key]
+      keysubpath.each {|key| hash = hash.fetch(key)}
+      hash.fetch(key)
+    rescue KeyError
+      raise KeyError.new("keypath not found: #{keypath.inspect}")
+    end
+
+    # :call-seq:
+    #   fetch("key.path")      -> value or nil
+    #   fetch(["key", "path"]) -> value or nil
+    #
+    # Return the value at a specified keypath. If the keypath
+    # does not specify a terminal value, return the remaining
+    # subtree instead.
+    #
+    # Returns nil if the keypath is not found.
+
+    def [](keypath)
+      fetch(keypath)
     rescue
       nil
     end
