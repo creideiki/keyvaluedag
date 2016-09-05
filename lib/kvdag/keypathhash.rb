@@ -27,12 +27,38 @@ class KVDAG
       self
     end
 
-    def [](keypath)
-      *keypath, key = KeyPath.new(keypath)
+    # :call-seq:
+    #   fetch("key.path")      -> value or KeyError
+    #   fetch(["key", "path"]) -> value or KeyError
+    #
+    # Return the value at a specified keypath. If the keypath
+    # does not specify a terminal value, return the remaining
+    # subtree instead.
+    #
+    # Raises a KeyError exception if the keypath is not found.
+
+    def fetch(keypath)
+      *keysubpath, key = KeyPath.new(keypath)
       hash = @hash
 
-      keypath.each {|key| hash = hash[key]}
-      hash[key]
+      keysubpath.each {|key| hash = hash.fetch(key)}
+      hash.fetch(key)
+    rescue KeyError
+      raise KeyError.new("keypath not found: #{keypath.inspect}")
+    end
+
+    # :call-seq:
+    #   []("key.path")      -> value or nil
+    #   [](["key", "path"]) -> value or nil
+    #
+    # Return the value at a specified keypath. If the keypath
+    # does not specify a terminal value, return the remaining
+    # subtree instead.
+    #
+    # Returns nil if the keypath is not found.
+
+    def [](keypath)
+      fetch(keypath)
     rescue
       nil
     end
@@ -49,6 +75,23 @@ class KVDAG
       end
 
       hash[key] = value
+    end
+
+    # :call-seq:
+    #   filter("key.path1", ..., "key.pathN") -> KeyPathHashProxy
+    #
+    # Filter a keypathhash tree by a list of keypath prefixes, and
+    # return a new keypathhash containing only those trees.
+    #
+    # Raises a KeyError exception if any of the specified keypaths
+    # cannot be found.
+
+    def filter(*keypaths)
+      result = self.class.new
+      keypaths.each do |keypath|
+        result[keypath] = self.fetch(keypath)
+      end
+      result
     end
   end
 end
