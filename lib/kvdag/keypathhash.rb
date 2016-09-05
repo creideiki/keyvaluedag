@@ -48,8 +48,8 @@ class KVDAG
     end
 
     # :call-seq:
-    #   fetch("key.path")      -> value or nil
-    #   fetch(["key", "path"]) -> value or nil
+    #   []("key.path")      -> value or nil
+    #   [](["key", "path"]) -> value or nil
     #
     # Return the value at a specified keypath. If the keypath
     # does not specify a terminal value, return the remaining
