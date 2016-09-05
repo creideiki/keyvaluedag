@@ -4,7 +4,7 @@ Gem::Specification.new do |s|
   s.summary	= 'Direct Acyclical Graph for KeyValue searches'
   s.description	= File.read(File.join(File.dirname(__FILE__), 'README.md'))
   s.homepage    = 'https://github.com/saab-simc-admin/keyvaluedag'
-  s.version	= '0.0.2'
+  s.version	= '0.0.3'
   s.author	= 'Calle Englund'
   s.email	= 'calle.englund@saabgroup.com'
   s.license	= 'MIT'
