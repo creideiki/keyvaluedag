@@ -76,5 +76,22 @@ class KVDAG
 
       hash[key] = value
     end
+
+    # :call-seq:
+    #   filter("key.path1", ..., "key.pathN") -> KeyPathHashProxy
+    #
+    # Filter a keypathhash tree by a list of keypath prefixes, and
+    # return a new keypathhash containing only those trees.
+    #
+    # Raises a KeyError exception if any of the specified keypaths
+    # cannot be found.
+
+    def filter(*keypaths)
+      result = self.class.new
+      keypaths.each do |keypath|
+        result[keypath] = self.fetch(keypath)
+      end
+      result
+    end
   end
 end
