@@ -2,15 +2,21 @@ class KVDAG
   module AttributeNode
     attr_reader :attrs
 
-    def [](attr, options = {})
+    def fetch(attr, options = {})
       case
       when (options[:shallow])
-        @attrs[attr]
+        @attrs.fetch(attr)
       when self.respond_to?(:to_hash_proxy)
-        to_hash_proxy[attr]
+        to_hash_proxy.fetch(attr)
       else
-        to_hash[attr]
+        to_hash.fetch(attr)
       end
+    end
+
+    def [](attr, options = {})
+      fetch(attr, options)
+    rescue
+      nil
     end
 
     def []=(attr, value)
