@@ -20,9 +20,13 @@ class KVDAG
 
     alias to_s inspect
 
-    alias children edges
+    # Return the set of all direct parents
 
-    def parents
+    alias parents edges
+
+    # Return the set of all direct children
+
+    def children
       result = Set.new
       dag.vertices.each do |vertex|
         next if vertex.equal?(self)
@@ -44,13 +48,21 @@ class KVDAG
       other.reachable?(self)
     end
 
-    def decendants
+    # Return the set of all parents, and their parents, recursively
+    #
+    # This is the same as all <tt>reachable?</tt> vertices.
+
+    def ancestors
       result = Set.new
       dag.vertices.each {|vertex| result << vertex if reachable?(vertex)}
       result
     end
 
-    def ancestors
+    # Return the set of all children, and their children, recursively
+    #
+    # This is the same as all <tt>reachable_from?</tt> vertices.
+
+    def descendants
       result = Set.new
       dag.vertices.each {|vertex| result << vertex if reachable_from?(vertex)}
       result
