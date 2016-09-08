@@ -19,11 +19,11 @@ class KVDAG
   # hash class for storing key-values. The default is to use
   # a dot-separated keypath proxy for storing key-values like
   #
-  # hsh["a.b.c"] = value
+  #     hsh["a.b.c"] = value
   #
   # in a tree of hashes
   #
-  # {"a" => {"b" => {"c" => value}}}
+  #     {"a" => {"b" => {"c" => value}}}
   #
   # The default hash proxy will also stringify all keys, and
   # makes all merge operations deep merges.
