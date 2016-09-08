@@ -1,6 +1,6 @@
 class KVDAG
   
-  # An edge to a vertex in a +KVDAG+
+  # An edge to a vertex in a KVDAG
 
   class Edge
     include AttributeNode
@@ -9,11 +9,11 @@ class KVDAG
 
     attr_reader :to_vertex
 
-    # Create a new edge towards a vertex in a +KVDAG+, 
+    # Create a new edge towards a vertex in a KVDAG, 
     # optionally loaded with key-values
     #
-    # N.B: <tt>KVDAG::Edge.new</tt> should never be called directly,
-    # always use <tt>KVDAG::Vertex#edge</tt> to create edges.
+    # N.B: KVDAG::Edge.new should never be called directly,
+    # always use KVDAG::Vertex#edge to create edges.
 
     private :initialize
     def initialize(dag, target, attrs = {})
@@ -30,7 +30,7 @@ class KVDAG
     # Return the proxied key-value hash tree visible from this edge
     # via its target vertex and all its ancestors
     #
-    # Calling +to_hash+ instead will return a regular hash tree, without
+    # Calling to_hash instead will return a regular hash tree, without
     # any special properties, e.g. for serializing as YAML or JSON.
 
     def to_hash_proxy
