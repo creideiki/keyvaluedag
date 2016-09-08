@@ -11,8 +11,8 @@ class KVDAG
     # Create a new vertex in a KVDAG, optionally loaded
     # with key-values.
     #
-    # N.B: <tt>KVDAG::Vertex.new</tt> should never be called directly,
-    # always use <tt>KVDAG#vertex</tt> to create vertices.
+    # N.B: KVDAG::Vertex.new should never be called directly,
+    # always use KVDAG#vertex to create vertices.
 
     private :initialize
     def initialize(dag, attrs = {})
@@ -46,10 +46,10 @@ class KVDAG
       result
     end
 
-    # Is +other+ vertex reachable via any of my +edges+?
+    # Is +other+ vertex reachable via any of my #edges?
     #
-    # A <tt>KVDAG::VertexError</tt> is raised if vertices belong
-    # to different KVDAG:s.
+    # A KVDAG::VertexError is raised if vertices belong
+    # to different KVDAG.
 
     def reachable?(other)
       other = other.to_vertex unless other.is_a?(Vertex)
@@ -58,10 +58,10 @@ class KVDAG
       equal?(other) || @edges.any? {|edge| edge.reachable?(other)}
     end
 
-    # Am I reachable from +other+ via any of its +edges+?
+    # Am I reachable from +other+ via any of its #edges?
     #
-    # A <tt>KVDAG::VertexError</tt> is raised if vertices belong
-    # to different KVDAG:s.
+    # A KVDAG::VertexError is raised if vertices belong
+    # to different KVDAG.
 
     def reachable_from?(other)
       other.reachable?(self)
@@ -69,7 +69,7 @@ class KVDAG
 
     # Return the set of all parents, and their parents, recursively
     #
-    # This is the same as all <tt>reachable?</tt> vertices.
+    # This is the same as all #reachable? vertices.
 
     def ancestors
       result = Set.new
@@ -79,7 +79,7 @@ class KVDAG
 
     # Return the set of all children, and their children, recursively
     #
-    # This is the same as all <tt>reachable_from?</tt> vertices.
+    # This is the same as all #reachable_from? vertices.
 
     def descendants
       result = Set.new
@@ -89,8 +89,8 @@ class KVDAG
 
     # Comparable ordering for a DAG:
     #
-    # Reachable vertices are lesser
-    # Unreachable vertices are equal
+    # Reachable vertices are lesser.
+    # Unreachable vertices are equal.
 
     def <=>(other) 
       return -1 if reachable?(other)
@@ -101,10 +101,10 @@ class KVDAG
     # Create an edge towards an +other+ vertex, optionally
     # loaded with key-values.
     #
-    # A <tt>KVDAG::VertexError</tt> is raised if vertices belong
-    # to different KVDAG:s.
+    # A KVDAG::VertexError is raised if vertices belong
+    # to different KVDAG.
     #
-    # A <tt>KVDAG::CyclicError</tt> is raised if the edge would
+    # A KVDAG::CyclicError is raised if the edge would
     # cause a cycle in the KVDAG.
 
     def edge(other, attrs = {})
@@ -120,7 +120,7 @@ class KVDAG
     # Return the proxied key-value hash tree visible from this vertex
     # via its edges and all its ancestors.
     #
-    # Calling +to_hash+ instead will return a regular hash tree, without
+    # Calling #to_hash instead will return a regular hash tree, without
     # any special properties, e.g. for serializing as YAML or JSON.
 
     def to_hash_proxy
