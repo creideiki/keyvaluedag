@@ -1,9 +1,18 @@
 class KVDAG
+
+  # A vertex in a KVDAG
+
   class Vertex
     include AttributeNode
     include Comparable
     attr_reader :dag
     attr_reader :edges
+
+    # Create a new vertex in a KVDAG, optionally loaded
+    # with key-values.
+    #
+    # N.B: KVDAG::Vertex.new should never be called directly,
+    # always use KVDAG#vertex to create vertices.
 
     private :initialize
     def initialize(dag, attrs = {})
@@ -37,6 +46,11 @@ class KVDAG
       result
     end
 
+    # Is +other+ vertex reachable via any of my #edges?
+    #
+    # A KVDAG::VertexError is raised if vertices belong
+    # to different KVDAG.
+
     def reachable?(other)
       other = other.to_vertex unless other.is_a?(Vertex)
       raise VertexError.new("Not in the same DAG") unless @dag.equal?(other.dag)
@@ -44,13 +58,18 @@ class KVDAG
       equal?(other) || @edges.any? {|edge| edge.reachable?(other)}
     end
 
+    # Am I reachable from +other+ via any of its #edges?
+    #
+    # A KVDAG::VertexError is raised if vertices belong
+    # to different KVDAG.
+
     def reachable_from?(other)
       other.reachable?(self)
     end
 
     # Return the set of all parents, and their parents, recursively
     #
-    # This is the same as all <tt>reachable?</tt> vertices.
+    # This is the same as all #reachable? vertices.
 
     def ancestors
       result = Set.new
@@ -60,7 +79,7 @@ class KVDAG
 
     # Return the set of all children, and their children, recursively
     #
-    # This is the same as all <tt>reachable_from?</tt> vertices.
+    # This is the same as all #reachable_from? vertices.
 
     def descendants
       result = Set.new
@@ -68,11 +87,25 @@ class KVDAG
       result
     end
 
+    # Comparable ordering for a DAG:
+    #
+    # Reachable vertices are lesser.
+    # Unreachable vertices are equal.
+
     def <=>(other) 
       return -1 if reachable?(other)
       return 1 if reachable_from?(other)
       return 0
     end
+
+    # Create an edge towards an +other+ vertex, optionally
+    # loaded with key-values.
+    #
+    # A KVDAG::VertexError is raised if vertices belong
+    # to different KVDAG.
+    #
+    # A KVDAG::CyclicError is raised if the edge would
+    # cause a cycle in the KVDAG.
 
     def edge(other, attrs = {})
       other = other.to_vertex unless other.is_a?(Vertex)
@@ -83,6 +116,12 @@ class KVDAG
       @edges << edge
       edge
     end
+
+    # Return the proxied key-value hash tree visible from this vertex
+    # via its edges and all its ancestors.
+    #
+    # Calling #to_hash instead will return a regular hash tree, without
+    # any special properties, e.g. for serializing as YAML or JSON.
 
     def to_hash_proxy
       result = @dag.hash_proxy_class.new
