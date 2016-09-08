@@ -10,9 +10,9 @@ class KVDAG
     # it will raise a KeyError exception.
     #
     # +options+:
-    #   shallow: If true, lookup is limited to attrs defined in
-    #            this attrnode. The default is lookup in the tree
-    #            returned by +to_hash_proxy+.
+    # [+shallow+] If true, lookup is limited to attrs defined in
+    #             this attrnode. The default is lookup in the tree
+    #             returned by +to_hash_proxy+.
 
     def fetch(attr, options = {})
       case
@@ -28,9 +28,9 @@ class KVDAG
     # Return the value for an +attr+, or +nil+ if the +attr+ can't be found.
     #
     # +options+:
-    #   shallow: If true, lookup is limited to attrs defined in
-    #            this attrnode. The default is lookup in the tree
-    #            returned by +to_hash_proxy+.
+    # [+shallow+] If true, lookup is limited to attrs defined in
+    #             this attrnode. The default is lookup in the tree
+    #             returned by +to_hash_proxy+.
 
     def [](attr, options = {})
       fetch(attr, options)
