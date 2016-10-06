@@ -31,7 +31,9 @@ class KVDAG
 
     # Return the set of all direct parents
 
-    alias parents edges
+    def parents
+      return Set.new(edges.map do |edge| edge.to_vertex end)
+    end
 
     # Return the set of all direct children
 
