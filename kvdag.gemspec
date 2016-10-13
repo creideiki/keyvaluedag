@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
 
   s.platform	= Gem::Platform::RUBY
   s.required_ruby_version = '~>2'
-  s.add_runtime_dependency 'activesupport', '~>5'
+  s.add_runtime_dependency 'activesupport', '~>4'
   s.files	= [ 'README.md', 'LICENSE' ]
   s.files	+= Dir['lib/**/*.rb']
   s.executables	= []
