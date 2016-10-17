@@ -70,5 +70,46 @@ class KVDAG
         raise NotImplementedError.new("not implemented for plain hash")
       end
     end
+
+    # :call-seq:
+    #   match?()                           -> true
+    #   match?(method: match, ...)         -> true or false
+    #   match?(one?:{ matches }, ...)      -> true or false
+    #   match?(any?:{ matches }, ...)      -> true or false
+    #   match?(all?:{ matches }, ...)      -> true of false
+    #   match?(none?:{ matches }, ...)     -> true or false
+    #
+    # Checks if the key-value view visible from a node matches all of
+    # set of filters. An empty filter set is considered a match.
+    #
+    # Any +method+ given will be matched against its result:
+    #   match === self.send(method)
+    #
+    # +matches+ should be a hash with 'key.path' strings at keys,
+    # and +match+ values to check for equality:
+    #   match === self[key]
+    #
+    # Examples:
+    #
+    #   node.match?(class:KVDAG::Vertex)
+    #   node.match?(none?:{'key' => Integer})
+    #   node.match?(all?:{'key' => /this|that/})
+    #   node.match?(any?:{'key1' => 'this', 'key2' => 'that'})
+    #   node.match?(one?:{'key1' => 'this', 'key2' => 'that'})
+
+    def match?(filter={})
+      valid_enumerators = [:none?, :one?, :any?, :all?]
+
+      filter.all? do |item|
+        method, match = item
+        if valid_enumerators.include?(method)
+          match.send(method) do |item|
+            value === self[key]
+          end
+        else
+          match === self.send(method)
+        end
+      end
+    end
   end
 end

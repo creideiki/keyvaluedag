@@ -35,17 +35,33 @@ class KVDAG
       return Set.new(edges.map {|edge| edge.to_vertex})
     end
 
-    # Return the set of all direct children
+    # :call-seq:
+    #   vtx.children                 -> all children
+    #   vtx.children(filter)         -> children matching +filter+
+    #   vtx.children {|cld| ... }    -> call block with each child
+    #
+    # Returns the set of all direct children, possibly filtered by #match?
+    # expressions. If a block is given, call it with each child.
 
-    def children
+    def children(filter={}, &block)
       result = Set.new
+
       dag.vertices.each do |vertex|
         next if vertex.equal?(self)
         vertex.edges.each do |edge|
-          result << vertex if edge.to_vertex.equal?(self)
+          if edge.to_vertex.equal?(self)
+            if vertex.match?(filter)
+              result << vertex if edge.to_vertex.equal?(self)
+            end
+          end
         end
       end
-      result
+
+      if block_given?
+        result.each(&block)
+      else
+        result
+      end
     end
 
     # Is +other+ vertex reachable via any of my #edges?
