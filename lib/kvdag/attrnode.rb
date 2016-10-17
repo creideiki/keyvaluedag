@@ -103,7 +103,8 @@ class KVDAG
       filter.all? do |item|
         method, match = item
         if valid_enumerators.include?(method)
-          match.send(method) do |item|
+          match.send(method) do |match_item|
+            key, value = match_item
             value === self[key]
           end
         else
