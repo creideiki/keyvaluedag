@@ -1,4 +1,5 @@
 require 'active_support'
+require "kvdag/version"
 require 'kvdag/error'
 require 'kvdag/attrnode'
 require 'kvdag/vertex'
