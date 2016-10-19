@@ -29,10 +29,26 @@ class KVDAG
 
     alias to_s inspect
 
-    # Return the set of all direct parents
+    # :call-seq:
+    #   vtx.parents                 -> all parents
+    #   vtx.parents(filter)         -> parents matching +filter+
+    #   vtx.parents {|cld| ... }    -> call block with each parent
+    #
+    # Returns the set of all direct parents, possibly filtered by #match?
+    # expressions. If a block is given, call it with each parent.
 
-    def parents
-      return Set.new(edges.map {|edge| edge.to_vertex})
+    def parents(filter={}, &block)
+      result = Set.new(edges.map {|edge|
+                         edge.to_vertex
+                       }.select {|parent|
+                         parent.match?(filter)
+                       })
+
+      if block_given?
+        result.each(&block)
+      else
+        result
+      end
     end
 
     # :call-seq:
