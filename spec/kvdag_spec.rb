@@ -105,4 +105,28 @@ describe KVDAG do
       }.to raise_error KVDAG::CyclicError
     end
   end
+
+  context 'when vertices and edges have attributes' do
+    before :each do
+      @dag = KVDAG.new
+      @v1 = @dag.vertex(first: true)
+      @v2 = @dag.vertex(second: true)
+      @v1.edge @v2, edge: true
+    end
+
+    it 'can be filtered by vertex attribute' do
+      expect(@dag.vertices(all?:{'first' => true})).to include @v1
+      expect(@dag.vertices(all?:{'first' => true})).not_to include @v2
+    end
+
+    it 'can be filtered by edge attribute' do
+      expect(@dag.vertices(all?:{'edge' => true})).to include @v1
+      expect(@dag.vertices(all?:{'edge' => true})).not_to include @v2
+    end
+
+    it 'can be filtered by parent attribute' do
+      expect(@dag.vertices(all?:{'second' => true})).to include @v1
+      expect(@dag.vertices(all?:{'second' => true})).to include @v2
+    end
+  end
 end

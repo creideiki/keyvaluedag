@@ -11,9 +11,6 @@ require 'kvdag/keypathhash'
 class KVDAG
   include Enumerable
 
-  # Return the set of all vertices
-  attr_reader :vertices
-
   attr_reader :hash_proxy_class
 
   # Create a new KVDAG, optionally using a specialized
@@ -47,15 +44,25 @@ class KVDAG
     KVDAG::Vertex.new(self, attrs)
   end
 
+  # Return the set of all vertices, possibly filtered by
+  # Vertex#match? expressions.
+
+  def vertices(filter = {})
+    return @vertices if filter.empty?
+
+    Set.new(@vertices.select{|vertex| vertex.match?(filter) })
+  end
+
   # Return the set of all edges
 
   def edges
     @vertices.reduce(Set.new) {|edges,vertex| edges + vertex.edges}
   end
 
-  # Enumerate all vertices in the DAG
+  # Enumerate all vertices in the DAG, possibly filtered
+  # by Vertex#match? expressions.
 
-  def each(&block)
-    @vertices.each(&block)
+  def each(filter = {}, &block)
+    vertices(filter).each(&block)
   end
 end
