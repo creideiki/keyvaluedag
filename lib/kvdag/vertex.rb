@@ -62,18 +62,11 @@ class KVDAG
     # expressions. If a block is given, call it with each child.
 
     def children(filter={}, &block)
-      result = Set.new
-
-      dag.vertices.each do |vertex|
-        next if vertex.equal?(self)
-        vertex.edges.each do |edge|
-          if edge.to_vertex.equal?(self)
-            if vertex.match?(filter)
-              result << vertex if edge.to_vertex.equal?(self)
-            end
-          end
-        end
-      end
+      result = Set.new(reverse_edges.map {|edge|
+                         edge.to_vertex
+                       }.select {|child|
+                         child.match?(filter)
+                       })
 
       if block_given?
         result.each(&block)
