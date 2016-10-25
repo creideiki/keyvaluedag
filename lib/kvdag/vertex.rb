@@ -7,6 +7,7 @@ class KVDAG
     include Comparable
     attr_reader :dag
     attr_reader :edges
+    attr_reader :reverse_edges
 
     # Create a new vertex in a KVDAG, optionally loaded
     # with key-values.
@@ -17,6 +18,7 @@ class KVDAG
     private :initialize
     def initialize(dag, attrs = {})
       @edges = Set.new
+      @reverse_edges = Set.new
       @dag = dag
       @attrs = dag.hash_proxy_class.new(attrs)
 
@@ -148,7 +150,22 @@ class KVDAG
 
       edge = Edge.new(@dag, other, attrs)
       @edges << edge
+      reverse_edge = Edge.new(@dag, self, {})
+      other.add_reverse_edge(reverse_edge)
       edge
+    end
+
+    # Create a reverse edge back to the +other+ vertex, which has a
+    # real edge to this vertex.
+    #
+    # Reverse edges have no attributes and do not participate in graph
+    # operations, other than as a speed-up for finding incoming edges.
+    #
+    # Do not call this except from #edge, which performs all required
+    # sanity checks.
+
+    def add_reverse_edge(other)
+      @reverse_edges << other
     end
 
     # Return the proxied key-value hash tree visible from this vertex
