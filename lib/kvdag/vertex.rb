@@ -88,7 +88,7 @@ class KVDAG
     def reachable?(other)
       other = other.to_vertex unless other.is_a?(Vertex)
       raise VertexError.new("Not in the same DAG") unless @dag.equal?(other.dag)
-      
+
       equal?(other) || @edges.any? {|edge| edge.reachable?(other)}
     end
 
@@ -126,7 +126,7 @@ class KVDAG
     # Reachable vertices are lesser.
     # Unreachable vertices are equal.
 
-    def <=>(other) 
+    def <=>(other)
       return -1 if reachable?(other)
       return 1 if reachable_from?(other)
       return 0
