@@ -1,20 +1,33 @@
 #-*- ruby -*-
-Gem::Specification.new do |s|
-  s.name	= 'kvdag'
-  s.summary	= 'Direct Acyclical Graph for KeyValue searches'
-  s.description	= File.read(File.join(File.dirname(__FILE__), 'README.md'))
-  s.homepage    = 'https://github.com/saab-simc-admin/keyvaluedag'
-  s.version	= '0.1.2'
-  s.author	= 'Calle Englund'
-  s.email	= 'calle.englund@saabgroup.com'
-  s.license	= 'MIT'
+# coding: utf-8
+lib = File.expand_path('../lib', __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+require 'kvdag/version'
 
-  s.platform	= Gem::Platform::RUBY
-  s.required_ruby_version = '~>2'
-  s.add_runtime_dependency 'activesupport', '~>4'
-  s.files	= [ 'README.md', 'LICENSE' ]
-  s.files	+= Dir['lib/**/*.rb']
-  s.executables	= []
-  s.test_files	= Dir['test/test*.rb']
-  s.has_rdoc	= true
+Gem::Specification.new do |spec|
+  spec.name	= 'kvdag'
+  spec.version  = KVDAG::VERSION
+  spec.summary	= 'Directed Acyclic Graph for Key-Value searches'
+  spec.description	= spec.summary
+  spec.homepage    = 'https://github.com/saab-simc-admin/keyvaluedag'
+  spec.authors	= ['Calle Englund']
+  spec.email	= ['calle.englund@saabgroup.com']
+  spec.license	= 'MIT'
+
+  spec.has_rdoc	= true
+
+  spec.files         = `git ls-files -z`.split("\x0").reject do |f|
+    f.match(%r{^(test|spec|features)/})
+  end
+  spec.bindir        = "exe"
+  spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
+  spec.require_paths = ["lib"]
+
+  spec.platform	= Gem::Platform::RUBY
+  spec.required_ruby_version = '~>2'
+  spec.add_runtime_dependency 'activesupport', '~>4'
+
+  spec.add_development_dependency "bundler", "~> 1.7.8"
+  spec.add_development_dependency "rake", "~> 0.9.6"
+  spec.add_development_dependency "rspec", "~> 2.14.1"
 end
