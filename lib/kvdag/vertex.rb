@@ -81,10 +81,9 @@ class KVDAG
     # to different KVDAG.
 
     def reachable?(other)
-      other = other.to_vertex unless other.is_a?(Vertex)
       raise VertexError.new("Not in the same DAG") unless @dag.equal?(other.dag)
 
-      equal?(other) || @edges.any? {|edge| edge.reachable?(other)}
+      equal?(other) || parents.any? {|parent| parent.reachable?(other)}
     end
 
     # Am I reachable from +other+ via any of its #edges?
