@@ -7,7 +7,6 @@ class KVDAG
     include Comparable
     attr_reader :dag
     attr_reader :edges
-    attr_reader :reverse_edges
 
     # Create a new vertex in a KVDAG, optionally loaded
     # with key-values.
@@ -18,9 +17,9 @@ class KVDAG
     private :initialize
     def initialize(dag, attrs = {})
       @edges = Set.new
-      @reverse_edges = Set.new
       @dag = dag
       @attrs = dag.hash_proxy_class.new(attrs)
+      @child_cache = Set.new
 
       @dag.vertices << self
     end
@@ -62,11 +61,9 @@ class KVDAG
     # expressions. If a block is given, call it with each child.
 
     def children(filter={}, &block)
-      result = Set.new(reverse_edges.map {|edge|
-                         edge.to_vertex
-                       }.select {|child|
-                         child.match?(filter)
-                       })
+      result = @child_cache.select {|child|
+                 child.match?(filter)
+               }
 
       if block_given?
         result.each(&block)
@@ -145,22 +142,8 @@ class KVDAG
 
       edge = Edge.new(@dag, other, attrs)
       @edges << edge
-      reverse_edge = Edge.new(@dag, self, {})
-      other.add_reverse_edge(reverse_edge)
+      other.add_child(self)
       edge
-    end
-
-    # Create a reverse edge back to the +other+ vertex, which has a
-    # real edge to this vertex.
-    #
-    # Reverse edges have no attributes and do not participate in graph
-    # operations, other than as a speed-up for finding incoming edges.
-    #
-    # Do not call this except from #edge, which performs all required
-    # sanity checks.
-
-    def add_reverse_edge(other)
-      @reverse_edges << other
     end
 
     # Return the proxied key-value hash tree visible from this vertex
@@ -176,5 +159,18 @@ class KVDAG
       end
       result.merge!(@attrs)
     end
+
+  protected
+
+    # Cache the fact that the +other+ vertex has created an edge to
+    # us.
+    #
+    # Do not call this except from #edge, which performs all required
+    # sanity checks.
+
+    def add_child(other)
+      @child_cache << other
+    end
+
   end
 end
