@@ -17,7 +17,7 @@ class KVDAG
       @hash = hash.deep_stringify_keys
       super(@hash)
     end
-    
+
     def merge(other, &block)
       self.class.new(@hash.deep_merge(other.deep_stringify_keys, &block))
     end

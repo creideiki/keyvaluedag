@@ -19,6 +19,7 @@ class KVDAG
       @edges = Set.new
       @dag = dag
       @attrs = dag.hash_proxy_class.new(attrs)
+      @child_cache = Set.new
 
       @dag.vertices << self
     end
@@ -60,18 +61,9 @@ class KVDAG
     # expressions. If a block is given, call it with each child.
 
     def children(filter={}, &block)
-      result = Set.new
-
-      dag.vertices.each do |vertex|
-        next if vertex.equal?(self)
-        vertex.edges.each do |edge|
-          if edge.to_vertex.equal?(self)
-            if vertex.match?(filter)
-              result << vertex if edge.to_vertex.equal?(self)
-            end
-          end
-        end
-      end
+      result = @child_cache.select {|child|
+                 child.match?(filter)
+               }
 
       if block_given?
         result.each(&block)
@@ -86,10 +78,9 @@ class KVDAG
     # to different KVDAG.
 
     def reachable?(other)
-      other = other.to_vertex unless other.is_a?(Vertex)
       raise VertexError.new("Not in the same DAG") unless @dag.equal?(other.dag)
-      
-      equal?(other) || @edges.any? {|edge| edge.reachable?(other)}
+
+      equal?(other) || parents.any? {|parent| parent.reachable?(other)}
     end
 
     # Am I reachable from +other+ via any of its #edges?
@@ -101,23 +92,26 @@ class KVDAG
       other.reachable?(self)
     end
 
-    # Return the set of all parents, and their parents, recursively
+    # Return the set of this object and all its parents, and their
+    # parents, recursively
     #
     # This is the same as all #reachable? vertices.
 
+
     def ancestors
-      result = Set.new
-      dag.vertices.each {|vertex| result << vertex if reachable?(vertex)}
+      result = Set.new([self])
+      parents.each {|p| result += p.ancestors }
       result
     end
 
-    # Return the set of all children, and their children, recursively
+    # Return the set of this object and all its children, and their
+    # children, recursively
     #
     # This is the same as all #reachable_from? vertices.
 
     def descendants
-      result = Set.new
-      dag.vertices.each {|vertex| result << vertex if reachable_from?(vertex)}
+      result = Set.new([self])
+      children.each {|c| result += c.descendants }
       result
     end
 
@@ -126,7 +120,7 @@ class KVDAG
     # Reachable vertices are lesser.
     # Unreachable vertices are equal.
 
-    def <=>(other) 
+    def <=>(other)
       return -1 if reachable?(other)
       return 1 if reachable_from?(other)
       return 0
@@ -148,6 +142,7 @@ class KVDAG
 
       edge = Edge.new(@dag, other, attrs)
       @edges << edge
+      other.add_child(self)
       edge
     end
 
@@ -164,5 +159,18 @@ class KVDAG
       end
       result.merge!(@attrs)
     end
+
+  protected
+
+    # Cache the fact that the +other+ vertex has created an edge to
+    # us.
+    #
+    # Do not call this except from #edge, which performs all required
+    # sanity checks.
+
+    def add_child(other)
+      @child_cache << other
+    end
+
   end
 end

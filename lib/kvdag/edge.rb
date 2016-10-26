@@ -1,5 +1,5 @@
 class KVDAG
-  
+
   # An edge to a vertex in a KVDAG
 
   class Edge
@@ -9,7 +9,7 @@ class KVDAG
 
     attr_reader :to_vertex
 
-    # Create a new edge towards a vertex in a KVDAG, 
+    # Create a new edge towards a vertex in a KVDAG,
     # optionally loaded with key-values
     #
     # N.B: KVDAG::Edge.new should never be called directly,
