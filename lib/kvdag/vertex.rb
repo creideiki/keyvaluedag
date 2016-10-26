@@ -96,23 +96,26 @@ class KVDAG
       other.reachable?(self)
     end
 
-    # Return the set of all parents, and their parents, recursively
+    # Return the set of this object and all its parents, and their
+    # parents, recursively
     #
     # This is the same as all #reachable? vertices.
 
+
     def ancestors
-      result = Set.new
-      dag.vertices.each {|vertex| result << vertex if reachable?(vertex)}
+      result = Set.new([self])
+      parents.each {|p| result += p.ancestors }
       result
     end
 
-    # Return the set of all children, and their children, recursively
+    # Return the set of this object and all its children, and their
+    # children, recursively
     #
     # This is the same as all #reachable_from? vertices.
 
     def descendants
-      result = Set.new
-      dag.vertices.each {|vertex| result << vertex if reachable_from?(vertex)}
+      result = Set.new([self])
+      children.each {|c| result += c.descendants }
       result
     end
 
