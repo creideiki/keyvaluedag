@@ -83,4 +83,50 @@ describe KVDAG::Vertex do
       expect(descendants).not_to include @v4
     end
   end
+
+  context 'reachability' do
+    before :all do
+      # v1 --> v2 --> v3
+      #           \-> v4
+
+      @dag = KVDAG.new
+      @v1 = @dag.vertex
+
+      @v2 = @dag.vertex
+      @v1.edge @v2
+
+      @v3 = @dag.vertex
+      @v4 = @dag.vertex
+      @v2.edge @v3
+      @v2.edge @v4
+    end
+
+    it 'can find reachability' do
+      expect(@v2.reachable? @v2).to be true
+      expect(@v2.reachable? @v3).to be true
+      expect(@v2.reachable? @v4).to be true
+    end
+
+    it 'does not claim reachability to be reversed' do
+      expect(@v2.reachable? @v1).to be false
+    end
+
+    it 'does not claim unrelated vertices are reachable' do
+      expect(@v3.reachable? @v4).to be false
+    end
+
+    it 'can find reversed reachability' do
+      expect(@v2.reachable_from? @v2).to be true
+      expect(@v3.reachable_from? @v2).to be true
+      expect(@v4.reachable_from? @v2).to be true
+    end
+
+    it 'does not claim reversed reachability to be reversed' do
+      expect(@v1.reachable_from? @v2).to be false
+    end
+
+    it 'does not claim unrelated vertices are reverse reachable' do
+      expect(@v3.reachable_from? @v4).to be false
+    end
+  end
 end
