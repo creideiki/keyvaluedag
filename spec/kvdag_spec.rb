@@ -32,7 +32,7 @@ describe KVDAG do
     end
 
     it 'has one vertex' do
-      expect(@dag.vertices.size).to eq 1
+      expect(@dag.vertices).to have(1).item
     end
 
     it 'has no edges' do
@@ -48,7 +48,7 @@ describe KVDAG do
     end
 
     it 'has two vertices' do
-      expect(@dag.vertices.size).to eq 2
+      expect(@dag.vertices).to have(2).items
     end
 
     it 'has no edges' do
@@ -75,11 +75,11 @@ describe KVDAG do
     end
 
     it 'has two vertices' do
-      expect(@dag.vertices.size).to eq 2
+      expect(@dag.vertices).to have(2).items
     end
 
     it 'has one edge' do
-      expect(@dag.edges.size).to eq 1
+      expect(@dag.edges).to have(1).item
     end
 
     it 'has ordered vertices' do
