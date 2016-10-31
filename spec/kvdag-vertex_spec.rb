@@ -1,6 +1,12 @@
 require 'spec_helper'
+require 'attrnode_examples'
 
 describe KVDAG::Vertex do
+  include_examples 'attributenodes', lambda {
+    @dag = KVDAG.new
+    @dag.vertex
+  }
+
   context 'immediate ancestry' do
     before :all do
       # v1 --> v2 --> v3

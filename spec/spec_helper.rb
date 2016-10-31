@@ -1,2 +1,3 @@
-$LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
-require "kvdag"
+$LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
+require 'kvdag'
+require 'rspec/collection_matchers'
