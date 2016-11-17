@@ -92,27 +92,48 @@ class KVDAG
       other.reachable?(self)
     end
 
-    # Return the set of this object and all its parents, and their
-    # parents, recursively
+    # :call-seq:
+    #   vtx.ancestors                 -> all ancestors
+    #   vtx.ancestors(filter)         -> ancestors matching +filter+
+    #   vtx.ancestors {|anc| ... }    -> call block with each ancestor
     #
-    # This is the same as all #reachable? vertices.
+    # Return the set of this object and all its parents, and their
+    # parents, recursively, possibly filtered by #match?
+    # expressions. If a block is given, call it with each ancestor.
 
+    def ancestors(filter={}, &block)
+      result = Set.new
+      result << self if match?(filter)
 
-    def ancestors
-      result = Set.new([self])
-      parents.each {|p| result += p.ancestors }
-      result
+      parents.each {|p| result += p.ancestors(filter) }
+
+      if block_given?
+        result.each(&block)
+      else
+        result
+      end
     end
 
-    # Return the set of this object and all its children, and their
-    # children, recursively
+    # :call-seq:
+    #   vtx.descendants                 -> all descendants
+    #   vtx.descendants(filter)         -> descendants matching +filter+
+    #   vtx.descendants {|desc| ... }   -> call block with each descendant
     #
-    # This is the same as all #reachable_from? vertices.
+    # Return the set of this object and all its children, and their
+    # children, recursively, possibly filtered by #match?
+    # expressions. If a block is given, call it with each descendant.
 
-    def descendants
-      result = Set.new([self])
-      children.each {|c| result += c.descendants }
-      result
+    def descendants(filter={}, &block)
+      result = Set.new
+      result << self if match?(filter)
+
+      children.each {|c| result += c.descendants(filter) }
+
+      if block_given?
+        result.each(&block)
+      else
+        result
+      end
     end
 
     # Comparable ordering for a DAG:
