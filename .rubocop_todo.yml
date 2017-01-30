@@ -201,17 +201,6 @@ Style/RedundantSelf:
     - 'lib/kvdag/attrnode.rb'
     - 'lib/kvdag/keypathhash.rb'
 
-# Offense count: 60
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles, EnforcedStyleForEmptyBraces, SupportedStylesForEmptyBraces.
-# SupportedStyles: space, no_space, compact
-# SupportedStylesForEmptyBraces: space, no_space
-Style/SpaceInsideHashLiteralBraces:
-  Exclude:
-    - 'spec/attrnode_examples.rb'
-    - 'spec/kvdag-vertex_spec.rb'
-    - 'spec/kvdag_spec.rb'
-
 # Offense count: 1
 # Cop supports --auto-correct.
 # Configuration parameters: IgnoredMethods.
