@@ -180,7 +180,7 @@ class KVDAG
       result.merge!(@attrs)
     end
 
-  protected
+    protected
 
     # Cache the fact that the +other+ vertex has created an edge to
     # us.
