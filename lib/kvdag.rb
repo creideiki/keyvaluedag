@@ -56,7 +56,7 @@ class KVDAG
   # Return the set of all edges
 
   def edges
-    @vertices.reduce(Set.new) {|edges,vertex| edges + vertex.edges}
+    @vertices.reduce(Set.new) {|edges, vertex| edges + vertex.edges}
   end
 
   # Enumerate all vertices in the DAG, possibly filtered
