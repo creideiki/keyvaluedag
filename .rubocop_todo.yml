@@ -201,14 +201,6 @@ Style/RedundantSelf:
     - 'lib/kvdag/attrnode.rb'
     - 'lib/kvdag/keypathhash.rb'
 
-# Offense count: 31
-# Cop supports --auto-correct.
-Style/SpaceAfterColon:
-  Exclude:
-    - 'spec/attrnode_examples.rb'
-    - 'spec/kvdag-vertex_spec.rb'
-    - 'spec/kvdag_spec.rb'
-
 # Offense count: 17
 # Cop supports --auto-correct.
 Style/SpaceAfterComma:

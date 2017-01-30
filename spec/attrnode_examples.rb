@@ -46,31 +46,31 @@ shared_examples 'attributenodes' do |node_proc|
     end
 
     it 'can match against none? of the rules' do
-      expect(@node.match?(none?:{'attr1'=>false,'attr2'=>false})).to be true
-      expect(@node.match?(none?:{'attr1'=>true,'attr2'=>false})).to be false
-      expect(@node.match?(none?:{'attr1'=>false,'attr2'=>true})).to be false
-      expect(@node.match?(none?:{'attr1'=>true,'attr2'=>true})).to be false
+      expect(@node.match?(none?: {'attr1'=>false,'attr2'=>false})).to be true
+      expect(@node.match?(none?: {'attr1'=>true,'attr2'=>false})).to be false
+      expect(@node.match?(none?: {'attr1'=>false,'attr2'=>true})).to be false
+      expect(@node.match?(none?: {'attr1'=>true,'attr2'=>true})).to be false
     end
 
     it 'can match against one? of the rules' do
-      expect(@node.match?(one?:{'attr1'=>false,'attr2'=>false})).to be false
-      expect(@node.match?(one?:{'attr1'=>true,'attr2'=>false})).to be true
-      expect(@node.match?(one?:{'attr1'=>false,'attr2'=>true})).to be true
-      expect(@node.match?(one?:{'attr1'=>true,'attr2'=>true})).to be false
+      expect(@node.match?(one?: {'attr1'=>false,'attr2'=>false})).to be false
+      expect(@node.match?(one?: {'attr1'=>true,'attr2'=>false})).to be true
+      expect(@node.match?(one?: {'attr1'=>false,'attr2'=>true})).to be true
+      expect(@node.match?(one?: {'attr1'=>true,'attr2'=>true})).to be false
     end
 
     it 'can match against any? of the rules' do
-      expect(@node.match?(any?:{'attr1'=>false,'attr2'=>false})).to be false
-      expect(@node.match?(any?:{'attr1'=>true,'attr2'=>false})).to be true
-      expect(@node.match?(any?:{'attr1'=>false,'attr2'=>true})).to be true
-      expect(@node.match?(any?:{'attr1'=>true,'attr2'=>true})).to be true
+      expect(@node.match?(any?: {'attr1'=>false,'attr2'=>false})).to be false
+      expect(@node.match?(any?: {'attr1'=>true,'attr2'=>false})).to be true
+      expect(@node.match?(any?: {'attr1'=>false,'attr2'=>true})).to be true
+      expect(@node.match?(any?: {'attr1'=>true,'attr2'=>true})).to be true
     end
 
     it 'can match against all? of the rules' do
-      expect(@node.match?(all?:{'attr1'=>false,'attr2'=>false})).to be false
-      expect(@node.match?(all?:{'attr1'=>true,'attr2'=>false})).to be false
-      expect(@node.match?(all?:{'attr1'=>false,'attr2'=>true})).to be false
-      expect(@node.match?(all?:{'attr1'=>true,'attr2'=>true})).to be true
+      expect(@node.match?(all?: {'attr1'=>false,'attr2'=>false})).to be false
+      expect(@node.match?(all?: {'attr1'=>true,'attr2'=>false})).to be false
+      expect(@node.match?(all?: {'attr1'=>false,'attr2'=>true})).to be false
+      expect(@node.match?(all?: {'attr1'=>true,'attr2'=>true})).to be true
     end
   end
 
@@ -93,20 +93,20 @@ shared_examples 'attributenodes' do |node_proc|
   context 'when merging' do
     it 'will be deeply merged' do
       @node['deep.key.path1'] = true
-      @node.merge! deep:{key:{path2: true}}
+      @node.merge! deep: {key: {path2: true}}
       expect(@node['deep.key.path1']).to be true
       expect(@node['deep.key.path2']).to be true
     end
 
     it 'will overwrite duplicate key values' do
       @node['deep.key.path1'] = true
-      @node.merge! deep:{key:{path1: false}}
+      @node.merge! deep: {key: {path1: false}}
       expect(@node['deep.key.path1']).to be false
     end
 
     it 'will not append duplicate key values' do
       @node['key'] = [1]
-      @node.merge! key:[2]
+      @node.merge! key: [2]
       expect(@node['key']).to have(1).item
     end
   end
