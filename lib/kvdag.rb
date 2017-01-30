@@ -1,5 +1,5 @@
 require 'active_support'
-require "kvdag/version"
+require 'kvdag/version'
 require 'kvdag/error'
 require 'kvdag/attrnode'
 require 'kvdag/vertex'
@@ -33,7 +33,7 @@ class KVDAG
   end
 
   def inspect
-    "#<%s:%x(%d vertices, %d edges)>" % [self.class, self.object_id,
+    '#<%s:%x(%d vertices, %d edges)>' % [self.class, self.object_id,
                                          vertices.length, edges.length]
   end
 

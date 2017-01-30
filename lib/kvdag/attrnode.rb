@@ -67,7 +67,7 @@ class KVDAG
       if self.respond_to?(:to_hash_proxy) then
         to_hash_proxy.filter(*keys)
       else
-        raise NotImplementedError.new("not implemented for plain hash")
+        raise NotImplementedError.new('not implemented for plain hash')
       end
     end
 

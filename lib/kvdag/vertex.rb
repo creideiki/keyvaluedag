@@ -25,7 +25,7 @@ class KVDAG
     end
 
     def inspect
-      "#<%s @attr=%s @edges=%s>" % [self.class, @attrs.to_hash, @edges.to_a]
+      '#<%s @attr=%s @edges=%s>' % [self.class, @attrs.to_hash, @edges.to_a]
     end
 
     alias to_s inspect
@@ -78,7 +78,7 @@ class KVDAG
     # to different KVDAG.
 
     def reachable?(other)
-      raise VertexError.new("Not in the same DAG") unless @dag.equal?(other.dag)
+      raise VertexError.new('Not in the same DAG') unless @dag.equal?(other.dag)
 
       equal?(other) || parents.any? {|parent| parent.reachable?(other)}
     end
@@ -158,8 +158,8 @@ class KVDAG
 
     def edge(other, attrs = {})
       other = other.to_vertex unless other.is_a?(Vertex)
-      raise VertexError.new("Not in the same DAG") if @dag != other.dag
-      raise CyclicError.new("Would become cyclic") if other.reachable?(self)
+      raise VertexError.new('Not in the same DAG') if @dag != other.dag
+      raise CyclicError.new('Would become cyclic') if other.reachable?(self)
 
       edge = Edge.new(@dag, other, attrs)
       @edges << edge

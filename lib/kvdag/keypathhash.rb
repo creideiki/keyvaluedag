@@ -6,14 +6,14 @@ class KVDAG
     class KeyPath < Array
       private :initialize
       def initialize(keypath)
-        keypath = keypath.split(".") if keypath.is_a?(String)
+        keypath = keypath.split('.') if keypath.is_a?(String)
         super
       end
     end
 
     private :initialize
     def initialize(hash = {})
-      raise TypeError.new("Must be initialized with a `hash`") unless hash.is_a?(Hash)
+      raise TypeError.new('Must be initialized with a `hash`') unless hash.is_a?(Hash)
       @hash = hash.deep_stringify_keys
       super(@hash)
     end

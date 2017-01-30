@@ -22,7 +22,7 @@ class KVDAG
     end
 
     def inspect
-      "#<%s @attr=%s @to_vertex=%s>" % [self.class, @attrs.to_hash, @to_vertex]
+      '#<%s @attr=%s @to_vertex=%s>' % [self.class, @attrs.to_hash, @to_vertex]
     end
 
     alias to_s inspect

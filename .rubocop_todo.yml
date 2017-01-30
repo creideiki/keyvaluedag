@@ -285,21 +285,6 @@ Style/SpaceInsideHashLiteralBraces:
     - 'spec/kvdag-vertex_spec.rb'
     - 'spec/kvdag_spec.rb'
 
-# Offense count: 27
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles, ConsistentQuotesInMultiline.
-# SupportedStyles: single_quotes, double_quotes
-Style/StringLiterals:
-  Exclude:
-    - 'Rakefile'
-    - 'bin/console'
-    - 'kvdag.gemspec'
-    - 'lib/kvdag.rb'
-    - 'lib/kvdag/attrnode.rb'
-    - 'lib/kvdag/edge.rb'
-    - 'lib/kvdag/keypathhash.rb'
-    - 'lib/kvdag/vertex.rb'
-
 # Offense count: 1
 # Cop supports --auto-correct.
 # Configuration parameters: IgnoredMethods.
