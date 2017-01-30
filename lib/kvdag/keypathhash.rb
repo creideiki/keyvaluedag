@@ -41,7 +41,7 @@ class KVDAG
       *keysubpath, key = KeyPath.new(keypath)
       hash = @hash
 
-      keysubpath.each {|key| hash = hash.fetch(key)}
+      keysubpath.each { |key| hash = hash.fetch(key) }
       hash.fetch(key)
     rescue KeyError
       raise KeyError.new("keypath not found: #{keypath.inspect}")

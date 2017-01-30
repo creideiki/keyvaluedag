@@ -38,9 +38,9 @@ class KVDAG
     # expressions. If a block is given, call it with each parent.
 
     def parents(filter = {}, &block)
-      result = Set.new(edges.map {|edge|
+      result = Set.new(edges.map { |edge|
                          edge.to_vertex
-                       }.select {|parent|
+                       }.select { |parent|
                          parent.match?(filter)
                        })
 
@@ -60,7 +60,7 @@ class KVDAG
     # expressions. If a block is given, call it with each child.
 
     def children(filter = {}, &block)
-      result = @child_cache.select {|child|
+      result = @child_cache.select { |child|
                  child.match?(filter)
                }
 
@@ -79,7 +79,7 @@ class KVDAG
     def reachable?(other)
       raise VertexError.new('Not in the same DAG') unless @dag.equal?(other.dag)
 
-      equal?(other) || parents.any? {|parent| parent.reachable?(other)}
+      equal?(other) || parents.any? { |parent| parent.reachable?(other) }
     end
 
     # Am I reachable from +other+ via any of its #edges?
@@ -104,7 +104,7 @@ class KVDAG
       result = Set.new
       result << self if match?(filter)
 
-      parents.each {|p| result += p.ancestors(filter) }
+      parents.each { |p| result += p.ancestors(filter) }
 
       if block_given?
         result.each(&block)
@@ -126,7 +126,7 @@ class KVDAG
       result = Set.new
       result << self if match?(filter)
 
-      children.each {|c| result += c.descendants(filter) }
+      children.each { |c| result += c.descendants(filter) }
 
       if block_given?
         result.each(&block)

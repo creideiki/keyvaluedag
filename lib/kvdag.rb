@@ -50,13 +50,13 @@ class KVDAG
   def vertices(filter = {})
     return @vertices if filter.empty?
 
-    Set.new(@vertices.select {|vertex| vertex.match?(filter) })
+    Set.new(@vertices.select { |vertex| vertex.match?(filter) })
   end
 
   # Return the set of all edges
 
   def edges
-    @vertices.reduce(Set.new) {|edges, vertex| edges + vertex.edges}
+    @vertices.reduce(Set.new) { |edges, vertex| edges + vertex.edges }
   end
 
   # Enumerate all vertices in the DAG, possibly filtered
