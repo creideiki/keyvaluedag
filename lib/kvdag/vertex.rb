@@ -1,5 +1,4 @@
 class KVDAG
-
   # A vertex in a KVDAG
 
   class Vertex
@@ -192,6 +191,5 @@ class KVDAG
     def add_child(other)
       @child_cache << other
     end
-
   end
 end

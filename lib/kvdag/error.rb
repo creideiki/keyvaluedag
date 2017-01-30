@@ -1,5 +1,4 @@
 class KVDAG
-
   # Vertices belong to different DAG:s
 
   class VertexError < StandardError

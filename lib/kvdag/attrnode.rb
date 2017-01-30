@@ -1,5 +1,4 @@
 class KVDAG
-
   # Mixin with common methods for managing the +attrs+ of
   # vertices and edges in a KVDAG.
 

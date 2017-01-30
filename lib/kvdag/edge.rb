@@ -1,5 +1,4 @@
 class KVDAG
-
   # An edge to a vertex in a KVDAG
 
   class Edge
