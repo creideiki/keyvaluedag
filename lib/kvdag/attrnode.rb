@@ -96,7 +96,7 @@ class KVDAG
     #   node.match?(any?:{'key1' => 'this', 'key2' => 'that'})
     #   node.match?(one?:{'key1' => 'this', 'key2' => 'that'})
 
-    def match?(filter={})
+    def match?(filter = {})
       valid_enumerators = [:none?, :one?, :any?, :all?]
 
       filter.all? do |item|

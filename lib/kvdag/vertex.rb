@@ -37,7 +37,7 @@ class KVDAG
     # Returns the set of all direct parents, possibly filtered by #match?
     # expressions. If a block is given, call it with each parent.
 
-    def parents(filter={}, &block)
+    def parents(filter = {}, &block)
       result = Set.new(edges.map {|edge|
                          edge.to_vertex
                        }.select {|parent|
@@ -59,7 +59,7 @@ class KVDAG
     # Returns the set of all direct children, possibly filtered by #match?
     # expressions. If a block is given, call it with each child.
 
-    def children(filter={}, &block)
+    def children(filter = {}, &block)
       result = @child_cache.select {|child|
                  child.match?(filter)
                }
@@ -100,7 +100,7 @@ class KVDAG
     # parents, recursively, possibly filtered by #match?
     # expressions. If a block is given, call it with each ancestor.
 
-    def ancestors(filter={}, &block)
+    def ancestors(filter = {}, &block)
       result = Set.new
       result << self if match?(filter)
 
@@ -122,7 +122,7 @@ class KVDAG
     # children, recursively, possibly filtered by #match?
     # expressions. If a block is given, call it with each descendant.
 
-    def descendants(filter={}, &block)
+    def descendants(filter = {}, &block)
       result = Set.new
       result << self if match?(filter)
 
