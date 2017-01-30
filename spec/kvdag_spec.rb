@@ -71,7 +71,7 @@ describe KVDAG do
     end
 
     it 'is acyclic' do
-      expect{ @v1.edge @v2 }.to_not raise_error
+      expect { @v1.edge @v2 }.to_not raise_error
     end
 
     it 'has two vertices' do
@@ -98,9 +98,9 @@ describe KVDAG do
     end
 
     it 'would become cyclic' do
-      expect{ @v1.edge @v1 }.to raise_error KVDAG::CyclicError
-      expect{ @v2.edge @v2 }.to raise_error KVDAG::CyclicError
-      expect{
+      expect { @v1.edge @v1 }.to raise_error KVDAG::CyclicError
+      expect { @v2.edge @v2 }.to raise_error KVDAG::CyclicError
+      expect {
         @v2.edge @v1
       }.to raise_error KVDAG::CyclicError
     end

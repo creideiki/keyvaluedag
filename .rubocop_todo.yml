@@ -201,16 +201,6 @@ Style/RedundantSelf:
     - 'lib/kvdag/attrnode.rb'
     - 'lib/kvdag/keypathhash.rb'
 
-# Offense count: 6
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: space, no_space
-Style/SpaceBeforeBlockBraces:
-  Exclude:
-    - 'lib/kvdag.rb'
-    - 'spec/attrnode_examples.rb'
-    - 'spec/kvdag_spec.rb'
-
 # Offense count: 14
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles, EnforcedStyleForEmptyBraces, SupportedStylesForEmptyBraces, SpaceBeforeBlockParameters.

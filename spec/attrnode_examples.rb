@@ -35,7 +35,7 @@ shared_examples 'attributenodes' do |node_proc|
     @node['deep.key.path'] = true
     filtered = @node.filter('deep')
     expect(filtered.fetch('deep.key.path')).to be true
-    expect{filtered.fetch('attr')}.to raise_error KeyError
+    expect {filtered.fetch('attr')}.to raise_error KeyError
   end
 
   context 'when matching against attribute rules' do
