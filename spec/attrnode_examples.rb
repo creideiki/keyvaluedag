@@ -46,31 +46,31 @@ shared_examples 'attributenodes' do |node_proc|
     end
 
     it 'can match against none? of the rules' do
-      expect(@node.match?(none?: {'attr1'=>false, 'attr2'=>false})).to be true
-      expect(@node.match?(none?: {'attr1'=>true, 'attr2'=>false})).to be false
-      expect(@node.match?(none?: {'attr1'=>false, 'attr2'=>true})).to be false
-      expect(@node.match?(none?: {'attr1'=>true, 'attr2'=>true})).to be false
+      expect(@node.match?(none?: {'attr1' => false, 'attr2' => false})).to be true
+      expect(@node.match?(none?: {'attr1' => true, 'attr2' => false})).to be false
+      expect(@node.match?(none?: {'attr1' => false, 'attr2' => true})).to be false
+      expect(@node.match?(none?: {'attr1' => true, 'attr2' => true})).to be false
     end
 
     it 'can match against one? of the rules' do
-      expect(@node.match?(one?: {'attr1'=>false, 'attr2'=>false})).to be false
-      expect(@node.match?(one?: {'attr1'=>true, 'attr2'=>false})).to be true
-      expect(@node.match?(one?: {'attr1'=>false, 'attr2'=>true})).to be true
-      expect(@node.match?(one?: {'attr1'=>true, 'attr2'=>true})).to be false
+      expect(@node.match?(one?: {'attr1' => false, 'attr2' => false})).to be false
+      expect(@node.match?(one?: {'attr1' => true, 'attr2' => false})).to be true
+      expect(@node.match?(one?: {'attr1' => false, 'attr2' => true})).to be true
+      expect(@node.match?(one?: {'attr1' => true, 'attr2' => true})).to be false
     end
 
     it 'can match against any? of the rules' do
-      expect(@node.match?(any?: {'attr1'=>false, 'attr2'=>false})).to be false
-      expect(@node.match?(any?: {'attr1'=>true, 'attr2'=>false})).to be true
-      expect(@node.match?(any?: {'attr1'=>false, 'attr2'=>true})).to be true
-      expect(@node.match?(any?: {'attr1'=>true, 'attr2'=>true})).to be true
+      expect(@node.match?(any?: {'attr1' => false, 'attr2' => false})).to be false
+      expect(@node.match?(any?: {'attr1' => true, 'attr2' => false})).to be true
+      expect(@node.match?(any?: {'attr1' => false, 'attr2' => true})).to be true
+      expect(@node.match?(any?: {'attr1' => true, 'attr2' => true})).to be true
     end
 
     it 'can match against all? of the rules' do
-      expect(@node.match?(all?: {'attr1'=>false, 'attr2'=>false})).to be false
-      expect(@node.match?(all?: {'attr1'=>true, 'attr2'=>false})).to be false
-      expect(@node.match?(all?: {'attr1'=>false, 'attr2'=>true})).to be false
-      expect(@node.match?(all?: {'attr1'=>true, 'attr2'=>true})).to be true
+      expect(@node.match?(all?: {'attr1' => false, 'attr2' => false})).to be false
+      expect(@node.match?(all?: {'attr1' => true, 'attr2' => false})).to be false
+      expect(@node.match?(all?: {'attr1' => false, 'attr2' => true})).to be false
+      expect(@node.match?(all?: {'attr1' => true, 'attr2' => true})).to be true
     end
   end
 

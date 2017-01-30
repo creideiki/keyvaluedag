@@ -201,14 +201,6 @@ Style/RedundantSelf:
     - 'lib/kvdag/attrnode.rb'
     - 'lib/kvdag/keypathhash.rb'
 
-# Offense count: 34
-# Cop supports --auto-correct.
-# Configuration parameters: AllowForAlignment.
-Style/SpaceAroundOperators:
-  Exclude:
-    - 'kvdag.gemspec'
-    - 'spec/attrnode_examples.rb'
-
 # Offense count: 6
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles.
