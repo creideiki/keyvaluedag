@@ -75,3 +75,12 @@ follow these guidelines to make the experience as smooth as possible:
     in the first line, then paragraphs of explanatory text, line
     wrapped.
 
+- Test your code.
+
+  - Code shall pass [Rubocop](https://github.com/bbatsov/rubocop) tests. See [.rubocop.yml](.rubocop.yml) for configured options. Rubocop is automaticallly run with the default Rake task.
+
+  - Tests shall be written in [RSpec](http://rspec.info/).
+
+  - Library code shall have unit tests.
+
+  - Tools shall have integration and end-to-end tests.

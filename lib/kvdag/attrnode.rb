@@ -1,5 +1,4 @@
 class KVDAG
-
   # Mixin with common methods for managing the +attrs+ of
   # vertices and edges in a KVDAG.
 
@@ -67,7 +66,7 @@ class KVDAG
       if self.respond_to?(:to_hash_proxy) then
         to_hash_proxy.filter(*keys)
       else
-        raise NotImplementedError.new("not implemented for plain hash")
+        raise NotImplementedError.new('not implemented for plain hash')
       end
     end
 
@@ -97,7 +96,7 @@ class KVDAG
     #   node.match?(any?:{'key1' => 'this', 'key2' => 'that'})
     #   node.match?(one?:{'key1' => 'this', 'key2' => 'that'})
 
-    def match?(filter={})
+    def match?(filter = {})
       valid_enumerators = [:none?, :one?, :any?, :all?]
 
       filter.all? do |item|

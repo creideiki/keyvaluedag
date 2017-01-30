@@ -1,5 +1,4 @@
 class KVDAG
-
   # A vertex in a KVDAG
 
   class Vertex
@@ -25,7 +24,7 @@ class KVDAG
     end
 
     def inspect
-      "#<%s @attr=%s @edges=%s>" % [self.class, @attrs.to_hash, @edges.to_a]
+      '#<%s @attr=%s @edges=%s>' % [self.class, @attrs.to_hash, @edges.to_a]
     end
 
     alias to_s inspect
@@ -38,10 +37,10 @@ class KVDAG
     # Returns the set of all direct parents, possibly filtered by #match?
     # expressions. If a block is given, call it with each parent.
 
-    def parents(filter={}, &block)
-      result = Set.new(edges.map {|edge|
+    def parents(filter = {}, &block)
+      result = Set.new(edges.map { |edge|
                          edge.to_vertex
-                       }.select {|parent|
+                       }.select { |parent|
                          parent.match?(filter)
                        })
 
@@ -60,8 +59,8 @@ class KVDAG
     # Returns the set of all direct children, possibly filtered by #match?
     # expressions. If a block is given, call it with each child.
 
-    def children(filter={}, &block)
-      result = @child_cache.select {|child|
+    def children(filter = {}, &block)
+      result = @child_cache.select { |child|
                  child.match?(filter)
                }
 
@@ -78,9 +77,9 @@ class KVDAG
     # to different KVDAG.
 
     def reachable?(other)
-      raise VertexError.new("Not in the same DAG") unless @dag.equal?(other.dag)
+      raise VertexError.new('Not in the same DAG') unless @dag.equal?(other.dag)
 
-      equal?(other) || parents.any? {|parent| parent.reachable?(other)}
+      equal?(other) || parents.any? { |parent| parent.reachable?(other) }
     end
 
     # Am I reachable from +other+ via any of its #edges?
@@ -101,11 +100,11 @@ class KVDAG
     # parents, recursively, possibly filtered by #match?
     # expressions. If a block is given, call it with each ancestor.
 
-    def ancestors(filter={}, &block)
+    def ancestors(filter = {}, &block)
       result = Set.new
       result << self if match?(filter)
 
-      parents.each {|p| result += p.ancestors(filter) }
+      parents.each { |p| result += p.ancestors(filter) }
 
       if block_given?
         result.each(&block)
@@ -123,11 +122,11 @@ class KVDAG
     # children, recursively, possibly filtered by #match?
     # expressions. If a block is given, call it with each descendant.
 
-    def descendants(filter={}, &block)
+    def descendants(filter = {}, &block)
       result = Set.new
       result << self if match?(filter)
 
-      children.each {|c| result += c.descendants(filter) }
+      children.each { |c| result += c.descendants(filter) }
 
       if block_given?
         result.each(&block)
@@ -158,8 +157,8 @@ class KVDAG
 
     def edge(other, attrs = {})
       other = other.to_vertex unless other.is_a?(Vertex)
-      raise VertexError.new("Not in the same DAG") if @dag != other.dag
-      raise CyclicError.new("Would become cyclic") if other.reachable?(self)
+      raise VertexError.new('Not in the same DAG') if @dag != other.dag
+      raise CyclicError.new('Would become cyclic') if other.reachable?(self)
 
       edge = Edge.new(@dag, other, attrs)
       @edges << edge
@@ -181,7 +180,7 @@ class KVDAG
       result.merge!(@attrs)
     end
 
-  protected
+    protected
 
     # Cache the fact that the +other+ vertex has created an edge to
     # us.
@@ -192,6 +191,5 @@ class KVDAG
     def add_child(other)
       @child_cache << other
     end
-
   end
 end

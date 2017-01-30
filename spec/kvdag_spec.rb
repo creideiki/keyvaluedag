@@ -71,7 +71,7 @@ describe KVDAG do
     end
 
     it 'is acyclic' do
-      expect{ @v1.edge @v2 }.to_not raise_error
+      expect { @v1.edge @v2 }.to_not raise_error
     end
 
     it 'has two vertices' do
@@ -98,9 +98,9 @@ describe KVDAG do
     end
 
     it 'would become cyclic' do
-      expect{ @v1.edge @v1 }.to raise_error KVDAG::CyclicError
-      expect{ @v2.edge @v2 }.to raise_error KVDAG::CyclicError
-      expect{
+      expect { @v1.edge @v1 }.to raise_error KVDAG::CyclicError
+      expect { @v2.edge @v2 }.to raise_error KVDAG::CyclicError
+      expect {
         @v2.edge @v1
       }.to raise_error KVDAG::CyclicError
     end
@@ -115,18 +115,18 @@ describe KVDAG do
     end
 
     it 'can be filtered by vertex attribute' do
-      expect(@dag.vertices(all?:{'first' => true})).to include @v1
-      expect(@dag.vertices(all?:{'first' => true})).not_to include @v2
+      expect(@dag.vertices(all?: { 'first' => true })).to include @v1
+      expect(@dag.vertices(all?: { 'first' => true })).not_to include @v2
     end
 
     it 'can be filtered by edge attribute' do
-      expect(@dag.vertices(all?:{'edge' => true})).to include @v1
-      expect(@dag.vertices(all?:{'edge' => true})).not_to include @v2
+      expect(@dag.vertices(all?: { 'edge' => true })).to include @v1
+      expect(@dag.vertices(all?: { 'edge' => true })).not_to include @v2
     end
 
     it 'can be filtered by parent attribute' do
-      expect(@dag.vertices(all?:{'second' => true})).to include @v1
-      expect(@dag.vertices(all?:{'second' => true})).to include @v2
+      expect(@dag.vertices(all?: { 'second' => true })).to include @v1
+      expect(@dag.vertices(all?: { 'second' => true })).to include @v2
     end
   end
 end

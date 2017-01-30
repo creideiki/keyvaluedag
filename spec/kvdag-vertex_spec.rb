@@ -155,19 +155,19 @@ describe KVDAG::Vertex do
     end
 
     it 'can filter direct parents' do
-      parents = @v2.parents(all?:{'v3' => true})
+      parents = @v2.parents(all?: { 'v3' => true })
       expect(parents).to include @v3
       #expect(parents).not_to include @v5
     end
 
     it 'can filter direct children' do
-      children = @v2.children(all?:{'v1' => true})
+      children = @v2.children(all?: { 'v1' => true })
       expect(children).to include @v1
       #expect(children).not_to include @v4
     end
 
     it 'can filter ancestors' do
-      ancestors = @v1.ancestors(all?:{'v3' => true})
+      ancestors = @v1.ancestors(all?: { 'v3' => true })
       expect(ancestors).to include @v1
       expect(ancestors).to include @v2
       expect(ancestors).to include @v3
@@ -175,7 +175,7 @@ describe KVDAG::Vertex do
     end
 
     it 'can filter descendants' do
-      descendants = @v3.descendants(all?:{'v2' => true})
+      descendants = @v3.descendants(all?: { 'v2' => true })
       expect(descendants).to include @v1
       expect(descendants).to include @v2
       #expect(descendants).not_to include @v3
