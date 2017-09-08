@@ -90,7 +90,7 @@ Style/EmptyLiteral:
 # Offense count: 2
 # Cop supports --auto-correct.
 # Configuration parameters: AllowForAlignment, ForceEqualSignAlignment.
-Style/ExtraSpacing:
+Layout/ExtraSpacing:
   Exclude:
     - 'kvdag.gemspec'
 
@@ -132,7 +132,7 @@ Style/IfInsideElse:
 
 # Offense count: 4
 # Cop supports --auto-correct.
-Style/LeadingCommentSpace:
+Layout/LeadingCommentSpace:
   Exclude:
     - 'spec/kvdag-vertex_spec.rb'
 
